@@ -1,0 +1,466 @@
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
+
+<div class="dashboard">
+  <div class="row">
+    <div class="col-3">
+      <div class="sidebar">
+        <h2><strong>Dashboard</strong></h2>
+        <hr />
+        <div class="side-content">
+          <ul>
+            <li>
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenudev"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <h6>KPI</h6>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenudev">
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/1">Line 1</a>
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/2">Line 2</a>
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/3">Line 3</a>
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/4">Line 4</a>
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/5">Line 5</a>
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/kpi/list-kpi/6">Line 6</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+            <li>
+              <div class="dropdown">
+                <button
+                  class="btn btn-secondary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuKpi"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <h6>Deviation</h6>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuKpi">
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/1"
+                      >Line 1</a
+                    >
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/2"
+                      >Line 2</a
+                    >
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/3"
+                      >Line 3</a
+                    >
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/4"
+                      >Line 4</a
+                    >
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/5"
+                      >Line 5</a
+                    >
+                  </li>
+                  <li>
+                    <a href="http://127.0.0.1:8000/deviation/list-deviation/6"
+                      >Line 6</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="col-9 flex mt-20">
+      <div class="row">
+        <div
+          class="col card main-card"
+          style="background-color: rgb(76, 172, 76)"
+        >
+          <h4>Line 1 Opi</h4>
+          <h6>80%</h6>
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(196, 136, 59)"
+        >
+          <h4>Line 2 Opi</h4>
+          <h6>70%</h6>
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(83, 150, 228)"
+        >
+          <h4>Line 3 Opi</h4>
+          <h6>10%</h6>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col card main-card"
+          style="background-color: rgb(83, 150, 228)"
+        >
+          <h4>Line 4 Opi</h4>
+          <h6>70%</h6>
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(76, 172, 76)"
+        >
+          <h4>Line 5 Opi</h4>
+          <h6>0%</h6>
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(196, 136, 59)"
+        >
+          <h4>Line 6 Opi</h4>
+          <h6>0%</h6>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3 card main-chart">
+          <canvas id="myChart1" width="400" height="400"></canvas>
+          <script>
+            const ctx1 = document.getElementById("myChart1").getContext("2d");
+            const myChart1 = new Chart(ctx1, {
+              type: "line",
+              data: {
+                labels: [{%for label in line1_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line1_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+        <div class="col-3 card main-chart">
+          <canvas id="myChart2" width="400" height="400"></canvas>
+          <script>
+            const ctx2 = document.getElementById("myChart2").getContext("2d");
+            const myChart2 = new Chart(ctx2, {
+              type: "line",
+              data: {
+                labels: [{%for label in line2_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line2_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+        <div class="col-3 card main-chart">
+          <canvas id="myChart3" width="400" height="400"></canvas>
+          <script>
+            const ctx3 = document.getElementById("myChart3").getContext("2d");
+            const myChart3 = new Chart(ctx3, {
+              type: "line",
+              data: {
+                labels: [{%for label in line3_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line3_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-3 card main-chart">
+          <canvas id="myChart4" width="400" height="400"></canvas>
+          <script>
+            const ctx4 = document.getElementById("myChart4").getContext("2d");
+            const myChart4 = new Chart(ctx4, {
+              type: "line",
+              data: {
+                labels: [{%for label in line4_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line4_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+        <div class="col-3 card main-chart">
+          <canvas id="myChart5" width="400" height="400"></canvas>
+          <script>
+            const ctx5 = document.getElementById("myChart5").getContext("2d");
+            const myChart5 = new Chart(ctx5, {
+              type: "line",
+              data: {
+                labels: [{%for label in line5_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line5_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+        <div class="col-3 card main-chart">
+          <canvas id="myChart6" width="400" height="400"></canvas>
+          <script>
+            const ctx6 = document.getElementById("myChart6").getContext("2d");
+            const myChart6 = new Chart(ctx6, {
+              type: "line",
+              data: {
+                labels: [{%for label in line6_label%}  "{{label}}",{% endfor%} ],
+                datasets: [
+                  {
+                    label: "Opi",
+                    data: [{%for data in line6_data%}  {{data}}, {% endfor%} ],
+                    backgroundColor: [
+                      "rgba(255, 99, 132, 0.2)",
+                      "rgba(54, 162, 235, 0.2)",
+                      "rgba(255, 206, 86, 0.2)",
+                      "rgba(75, 192, 192, 0.2)",
+                      "rgba(153, 102, 255, 0.2)",
+                      "rgba(255, 159, 64, 0.2)",
+                      "rgba(255, 139, 64, 0.2)",
+                      "rgba(215, 159, 64, 0.2)",
+                    ],
+                    borderColor: [
+                      "rgba(255, 99, 132, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                      "rgba(75, 192, 192, 1)",
+                      "rgba(153, 102, 255, 1)",
+                      "rgba(255, 159, 64, 1)",
+                      "rgba(54, 162, 235, 1)",
+                      "rgba(255, 206, 86, 1)",
+                    ],
+                    borderWidth: 1,
+                  },
+                ],
+              },
+              options: {
+                scales: {
+                  y: {
+                    beginAtZero: true,
+                  },
+                },
+              },
+            });
+          </script>
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col card main-card"
+          style="background-color: rgb(76, 172, 76)"
+        >
+          1 of 3
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(196, 136, 59)"
+        >
+          2 of 3
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(83, 150, 228)"
+        >
+          3 of 3
+        </div>
+      </div>
+      <div class="row">
+        <div
+          class="col card main-card"
+          style="background-color: rgb(83, 150, 228)"
+        >
+          1 of 3
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(76, 172, 76)"
+        >
+          2 of 3
+        </div>
+        <div
+          class="col card main-card"
+          style="background-color: rgb(196, 136, 59)"
+        >
+          3 of 3
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

@@ -1,0 +1,21 @@
+<header class="navbar navbar-light" style="background-color: var(--nav)">
+  <div class="logo px-5">
+    <h1><a href="#">INSIGHT</a></h1>
+  </div>
+
+  {% if user.is_authenticated %}
+  <nav class="nav nav-masthead justify-content-end float-md-end px-5">
+    <a class="nav-link" href="#">Dashbord</a>
+    <a class="nav-link" href="#">Logged in as {{user.username}}</a>
+
+    <a class="nav-link" href="#">Logout</a>
+  </nav>
+  {% else %}
+  <nav class="nav nav-masthead justify-content-end float-md-end">
+    <a class="nav-link active" aria-current="page" href="#">Home</a>
+    <a class="nav-link" href="#">Login</a>
+    <a class="nav-link" href="#">Register</a>
+    <a class="nav-link" href="#">Contact</a>
+  </nav>
+  {% endif %}
+</header>
