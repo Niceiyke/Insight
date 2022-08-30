@@ -141,7 +141,7 @@ def DeviationDeploymentView(request):
     end_date=request.GET.get('end-date')
 
     if line !='' and line is not None:
-        equipments= equipments.filter(deviation__insight__line__id=line)  
+        equipments= equipments.filter(deviation__insight__line__id=line)
     
     if start_date !='' and start_date is not None:
         equipments =equipments.filter(deviation__insight__production_date__gte= start_date)
@@ -156,7 +156,6 @@ def DeviationDeploymentView(request):
     bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration'),frequency=Sum('deviation__frequency'))
     msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration'),frequency=Sum('deviation__frequency'))
 
-    print(bddeployments[0].duration)
     
     for deployment in bddeployments:
         print('bd',deployment,deployment.duration,deployment.frequency)
@@ -172,8 +171,7 @@ def DeviationDeploymentView(request):
     }
 
     return render(request,'insight/deployment-dashboard.html',context)
-    
-   
+      
 # Todo Refactor code 
 def DeviationCreateView(request,pk):
     form=DeviationForm()    
