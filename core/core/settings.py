@@ -121,7 +121,7 @@ STATICFILES_DIRS=[
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-AUTH_USER_MODEL = 'accounts.User'
+AUTH_USER_MODEL = 'accounts.AccountsUser'
 
-LOGIN_REDIRECT_URL ='/dashboard'
+LOGIN_REDIRECT_URL = '/insight/dashboard'
 LOGOUT_REDIRECT_URL ='/'

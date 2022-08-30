@@ -1,5 +1,6 @@
 {% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
 
+
 <div class="kpi">
   <div class="row">
     <div class="col-2 content-sidebar">
@@ -36,7 +37,7 @@
             <td>{{data.production_team}}</td>
             <td>{{data.product_type}}</td>
             <td>{{data.bottle_produced}}</td>
-            <td>{{data.line_output}}%</td>
+            <td class="opi">{{data.line_output}}</td>
           </tr>
           {% endfor %}
         </tbody>

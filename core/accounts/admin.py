@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from.models import User
+from.models import AccountsUser
 
 
 # Register your models here.
@@ -12,7 +12,7 @@ class UserAdminConfig(UserAdmin):
     fieldsets = (
         (None, {
             "fields": (
-                'email','sap_no','user_name','first_name','last_name'
+                'email','sap_no','user_name','first_name','last_name','password'
             ),
         }),
         ('Permissions',{
@@ -34,4 +34,4 @@ class UserAdminConfig(UserAdmin):
 
 
 
-admin.site.register(User,UserAdminConfig)
+admin.site.register(AccountsUser,UserAdminConfig)

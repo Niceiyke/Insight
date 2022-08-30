@@ -8,6 +8,8 @@ class CustomAccountManager(BaseUserManager):
         if not email:
             raise ValueError('Your email address is required')
         email=self.normalize_email(email)
+        email=email.strip().lower()
+        print(email)
         user = self.model(email=email,user_name=user_name,first_name=first_name,last_name=last_name,**other_fields)
         user.set_password(password)
         user.save()
@@ -30,10 +32,9 @@ class CustomAccountManager(BaseUserManager):
 
 
 
-class User(AbstractBaseUser,PermissionsMixin):
-
+class AccountsUser(AbstractBaseUser,PermissionsMixin):
     email =models.EmailField(unique=True)
-    sap_no =models.CharField(max_length=8)
+    sap_no =models.PositiveIntegerField()
     user_name =models.CharField(max_length=20)
     first_name =models.CharField(max_length=50,blank=True)
     last_name =models.CharField(max_length=50,blank=True)
@@ -43,9 +44,8 @@ class User(AbstractBaseUser,PermissionsMixin):
 
     objects = CustomAccountManager()
 
-
     USERNAME_FIELD ='email'
-    REQUIRED_FIELDS = ['user_name','first_name','last_name']
+    REQUIRED_FIELDS = ['user_name','sap_no','first_name','last_name']
 
     def _str_(self):
         return self.email

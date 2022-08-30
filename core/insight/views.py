@@ -55,9 +55,6 @@ class InsightDataDeleteView(DeleteView):
     template_name ='insight/delete.html'
     success_url = '/insight'
 
-
-
-
 def DeviationListView(request):
     qs= Deviation.objects.all()
     categories= Category.objects.all()
@@ -228,3 +225,73 @@ def FilterForm(request):
     filterform=FiltterForm()
     context = {'filterform':filterform}
     return render(request,'insight/filter.html',context)
+
+
+def DashboardView(request):
+    line1_data =[]
+    line1_label =[]
+    line2_data =[]
+    line2_label =[]
+    line3_data =[]
+    line3_label =[]
+    line4_data =[]
+    line4_label =[]
+    line5_data =[]
+    line5_label =[]
+    line6_data =[]
+    line6_label =[]
+
+
+    line1 =InsightData.objects.filter(line=1)
+    for i in line1:
+        line1_data.append(i.opi) 
+        line1_label.append(i.time_period) 
+    
+    line2 =InsightData.objects.filter(line=2)
+    for i in line2:
+        line2_data.append(i.opi) 
+        line2_label.append(i.time_period) 
+
+    line3 =InsightData.objects.filter(line=3)
+    for i in line3:
+        line3_data.append(i.opi) 
+        line3_label.append(i.time_period) 
+
+    line4 =InsightData.objects.filter(line=4)
+    for i in line4:
+        line4_data.append(i.opi) 
+        line4_label.append(i.time_period) 
+
+    line5 =InsightData.objects.filter(line=5)
+    for i in line5:
+        line5_data.append(i.opi) 
+        line5_label.append(i.time_period) 
+
+    line6 =InsightData.objects.filter(line=6)
+    for i in line6:
+        line6_data.append(i.opi) 
+        line6_label.append(i.time_period) 
+    
+    line1_opi =0
+    for i in line1_data:
+        a =0
+        a+=i
+    line1_opi=round(a/12,1)
+
+
+    context={
+        'line_opi1': line1_opi,
+        'line1_data':line1_data,
+        'line1_label': line1_label,
+        'line2_data': line2_data,
+        'line2_label': line2_label,
+        'line3_data':line3_data,
+        'line3_label': line3_label,
+        'line4_data': line4_data,
+        'line4_label': line4_label,
+        'line5_data':line5_data,
+        'line5_label': line5_label,
+        'line6_data': line6_data,
+        'line6_label': line6_label,
+    }
+    return render(request,'insight/dashboard.html',context)
