@@ -114,6 +114,7 @@ class InsightDataDeleteView(LoginRequiredMixin,DeleteView):
     model =InsightData
     template_name ='insight/delete.html'
     success_url = '/insight'
+
 @login_required(login_url='/accounts/login')
 def DeviationListView(request):
     qs= Deviation.objects.all()

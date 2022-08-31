@@ -1,6 +1,9 @@
 
 import os
 from pathlib import Path
+from django.core.management.utils import get_random_secret_key
+key=get_random_secret_key()
+print(key)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,13 +13,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-5t+w7q#aooa75vj%f)hi0c27x((0xxc#a@_oom5557d66a(!cj'
+SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p1gpc8*297#&xo)l6_7$od^0nfy=8z5=)lxcp))&46dhvc#$@%z8tcldm1$)btw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = str(os.environ.get('DEBUG'))=='1'
 
-ALLOWED_HOSTS = ['http://127.0.0.1:8000/','insight-production.up.railway.app/','yinsight.com.ng']
+ALLOWED_HOSTS = []
 
+if not DEBUG:
+    ALLOWED_HOSTS=[os.environ.get('ALLOWED_HOST')]
+    print(ALLOWED_HOSTS)
 
 # Application definition
 
@@ -66,24 +72,28 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-#DATABASES = {
- #   'default': {
- #       'ENGINE': 'django.db.backends.sqlite3',
- #       'NAME': BASE_DIR / 'db.sqlite3',
- #   }
-#}
-
-DATABASES = {
+if not DEBUG:
+        DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ["PGDATABASE"],
-        'USER': os.environ["PGUSER"],
-        'PASSWORD': os.environ["PGPASSWORD"],
-        'HOST': os.environ["PGHOST"],
-        'PORT': os.environ["PGPORT"],
+        'NAME': os.environ.get('NAME'),
+        'USER': os.environ.get('USER'),
+        'PASSWORD': os.environ.get('PASSWORD'),
+        'HOST': os.environ.get('HOST'),
+        'PORT': os.environ.get('PORT')
     }
 }
+
+else:
+        DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+    }
+
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

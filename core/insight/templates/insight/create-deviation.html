@@ -28,9 +28,8 @@
        </div>
 
          <div class="row mx-5">
-         <div class="col-12">{{form.failure_mode_description|as_crispy_field}}</div>
-  
- 
+         <div class="col-8">{{form.failure_mode_description|as_crispy_field}}</div>
+         <div class="col-4">{{form.status|as_crispy_field}}</div>
        </div>
   
       <button type="submit" class="btn btn-primary mt-3 mx-5" style="width: 90%;">Submit</button>

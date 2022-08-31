@@ -20,7 +20,7 @@ class DeviationForm(ModelForm):
     class Meta:
         model=Deviation
         fields =['category','equipment','frequency','duration',
-        'function_failure','failure_mode','failure_mode_description']
+        'function_failure','failure_mode','failure_mode_description','status']
 
    
 
