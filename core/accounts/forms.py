@@ -1,4 +1,3 @@
-from tkinter import Widget
 from django import forms
 from.models import AccountsUser
 from django.contrib.auth.forms import UserCreationForm

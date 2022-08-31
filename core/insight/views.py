@@ -1,21 +1,34 @@
 from django.shortcuts import redirect,render
 from django.db.models import Sum,Min,Avg
 from django.views.generic import View, ListView,CreateView,UpdateView,DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from .models import FailureMode, FunctionFailure,InsightData,Deviation,Equipment,Category, Line
 from .forms import DataForm,DeviationForm,FiltterForm
 
 
-class InsightDataListView(ListView):
+class InsightDataListView(LoginRequiredMixin,ListView):
+    login_url = '/accounts/login'
     model = InsightData
     template_name = "insight/list-data.html"
     context_object_name= 'datas'
       
 
-class InsightDataCreateView(CreateView):
+class InsightDataCreateView(LoginRequiredMixin,CreateView):
+    login_url='/accounts/login'
     model: InsightData
     form_class =DataForm
     template_name = 'insight/create.html'
     success_url = "/insight"
+
+    def get_initial(self):
+        qs=InsightData.objects.all().values_list('new_counter_reading').last()
+        qs=qs[len(qs)-1]
+        print(qs)
+        data=super().get_initial()
+        data['last_counter_reading']=qs
+        return data
 
     def form_valid(self, form):
         data= super().form_valid(form)
@@ -43,18 +56,20 @@ class InsightDataCreateView(CreateView):
         return data
         
 
-class InsightDataUpdateView(UpdateView):
+class InsightDataUpdateView(LoginRequiredMixin,UpdateView):
+    login_url='/accounts/login'
     model = InsightData
     form_class = DataForm
     template_name = 'insight/create.html'
     success_url = "/insight"
 
     
-class InsightDataDeleteView(DeleteView):
+class InsightDataDeleteView(LoginRequiredMixin,DeleteView):
+    login_url='/accounts/login'
     model =InsightData
     template_name ='insight/delete.html'
     success_url = '/insight'
-
+@login_required(login_url='/accounts/login')
 def DeviationListView(request):
     qs= Deviation.objects.all()
     categories= Category.objects.all()
@@ -124,7 +139,7 @@ def DeviationListView(request):
 
     return render (request,"insight/list-deviation.html",context)
 
-
+@login_required(login_url='/accounts/login')
 def DeviationDeploymentView(request):
     equipments =Equipment.objects.all()
     function_failures =FunctionFailure.objects.all()
@@ -150,8 +165,8 @@ def DeviationDeploymentView(request):
     bddeployments=equipments.exclude(deviation__category=1)
     print('yy',bddeployments)
 
-    bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration'),frequency=Sum('deviation__frequency'))
-    msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration'),frequency=Sum('deviation__frequency'))
+    bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
+    msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
 
     
     for deployment in bddeployments:
@@ -170,6 +185,7 @@ def DeviationDeploymentView(request):
     return render(request,'insight/deployment-dashboard.html',context)
       
 # Todo Refactor code 
+@login_required(login_url='/accounts/login')
 def DeviationCreateView(request,pk):
     form=DeviationForm()    
     if request.method =="POST":
@@ -210,23 +226,25 @@ def DeviationCreateView(request,pk):
     else:
         return redirect('/insight')
 
-class DeviationUpdateView(UpdateView):
+class DeviationUpdateView(LoginRequiredMixin,UpdateView):
+    login_url='/accounts/login'
     model = Deviation
     form_class =DeviationForm
     template_name = 'insight/create-deviation.html'
     success_url = "/insight/deviation"
 
-class DeviationDeleteView(DeleteView):
+class DeviationDeleteView(LoginRequiredMixin,DeleteView):
+    login_url='/accounts/login'
     model =InsightData
     template_name ='insight/delete-deviation.html'
     success_url = '/insight/deviation'
-
+@login_required(login_url='/accounts/login')
 def FilterForm(request):
     filterform=FiltterForm()
     context = {'filterform':filterform}
     return render(request,'insight/filter.html',context)
 
-
+@login_required(login_url='/accounts/login')
 def DashboardView(request):
     line1_data =[]
     line1_label =[]
