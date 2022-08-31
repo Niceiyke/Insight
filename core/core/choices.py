@@ -21,3 +21,5 @@ line_choices=[('1','1'), ('2','2'), ('3','3'), ('4','4'),('5','5'), ('6','6')]
 team_choices=[ ('Team A','Team A'),('Team B', 'Team B'),('Team C','Team C'),('Team D','Team D')]
 
 lead_choices =[('Jehu Alozie', 'Jehu Alozie'),('Aneke','Aneke'),('Stanley Obi','Stanley Obi')]
+
+status=[('Resolved','Resolved'),('Pending','Pending'),('Fixed','Fixed')]

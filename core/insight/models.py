@@ -164,6 +164,7 @@ class Deviation(models.Model):
     function_failure =models.ForeignKey(FunctionFailure,on_delete=models.CASCADE)
     failure_mode =models.ForeignKey(FailureMode,on_delete=models.CASCADE)
     failure_mode_description =models.CharField(max_length=100)
+    status =models.CharField(max_length=50,choices=choices.status)
 
     def __str__(self):
         return self.failure_mode_description 

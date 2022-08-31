@@ -4,7 +4,7 @@ from django.views.generic import View, ListView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from .models import FailureMode, FunctionFailure,InsightData,Deviation,Equipment,Category, Line
+from .models import Data_operator, FailureMode, FunctionFailure,InsightData,Deviation,Equipment,Category, Line, Product_type, Team_leader, Time_period
 from .forms import DataForm,DeviationForm,FiltterForm
 
 
@@ -13,6 +13,51 @@ class InsightDataListView(LoginRequiredMixin,ListView):
     model = InsightData
     template_name = "insight/list-data.html"
     context_object_name= 'datas'
+
+    def get_context_data(self, **kwargs):
+        product_type= Product_type.objects.all()
+        team_leader =Team_leader.objects.all()
+        operators =Data_operator.objects.all()
+        lines =Line.objects.all()
+        time_period =Time_period.objects.all()
+
+
+        datas=super().get_context_data(**kwargs)
+        datas['products']=product_type
+        datas['leaders']=team_leader
+        datas['operators']=operators
+        datas['lines']=lines
+        datas['times']=time_period
+
+
+        return datas
+    def get_queryset(self):
+        qs=super().get_queryset()
+
+        start_date=self.request.GET.get('start-date')
+        end_date=self.request.GET.get('end-date')
+        line= self.request.GET.get('line')
+        product =self.request.GET.get('product-type')
+        team_lead = self.request.GET.get('team-leader')
+        data_operator = self.request.GET.get('operator')
+        time =self.request.GET.get('time-period')
+
+        if line !='' and line is not None:
+             qs= qs.filter(line__id=line) 
+        if product !='' and  product is not None:
+             qs= qs.filter(product_type__id=product) 
+        if team_lead !='' and  team_lead is not None:
+             qs= qs.filter(team_leader__id=team_lead)    
+        if data_operator !='' and  data_operator is not None:
+             qs= qs.filter(data_operator__id=data_operator)  
+        if time !='' and  time is not None:
+             qs= qs.filter(time_period__id=time)            
+        if start_date !='' and start_date is not None:
+            qs =qs.filter(production_date__gte= start_date)
+        if end_date !='' and end_date is not None:
+            qs =qs.filter(production_date__lte= end_date)
+
+        return qs
       
 
 class InsightDataCreateView(LoginRequiredMixin,CreateView):
@@ -96,7 +141,7 @@ def DeviationListView(request):
 
     if start_date !='' and start_date is not None:
         qs =qs.filter(insight__production_date__gte= start_date)
-    if end_date !='' and start_date is not None:
+    if end_date !='' and end_date is not None:
         qs =qs.filter(insight__production_date__lte= end_date)
     if duration !='' and duration is not None: 
         qs =qs.filter(duration__gte= duration)
@@ -161,9 +206,6 @@ def DeviationDeploymentView(request):
     if end_date !='' and start_date is not None:
         equipments =equipments.filter(deviation__insight__production_date__lte= end_date)
         
-    print('ff',equipments.count())
-    bddeployments=equipments.exclude(deviation__category=1)
-    print('yy',bddeployments)
 
     bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
     msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
