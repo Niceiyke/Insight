@@ -96,7 +96,7 @@ class InsightDataCreateView(LoginRequiredMixin,CreateView):
         self.object.save()
 
         if (self.object.deviation_duration>0):
-            return redirect(f'create-deviation/{self.object.id}')
+            return redirect(f'deviation/create/{self.object.id}')
       
         return data
         
@@ -188,6 +188,7 @@ def DeviationListView(request):
 @login_required(login_url='/accounts/login')
 def DeviationDeploymentView(request):
     equipments =Equipment.objects.all()
+    print('all',len(equipments))
     function_failures =FunctionFailure.objects.all()
     failure_modes =FailureMode.objects.all()
     lines =Line.objects.all()
@@ -200,6 +201,8 @@ def DeviationDeploymentView(request):
 
     if line !='' and line is not None:
         equipments= equipments.filter(deviation__insight__line__id=line)
+ 
+        
     
     if start_date !='' and start_date is not None:
         equipments =equipments.filter(deviation__insight__production_date__gte= start_date)
@@ -211,13 +214,7 @@ def DeviationDeploymentView(request):
     bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
     msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
 
-    
-    for deployment in bddeployments:
-        print('bd',deployment,deployment.duration,deployment.frequency)
 
-    for deployment in msdeployments:
-        print('ms',deployment,deployment.duration,deployment.frequency)
-    
     context={
         'lines':lines,
         'msdeployments':msdeployments,

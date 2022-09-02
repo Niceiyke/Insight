@@ -4,9 +4,6 @@ crispy-bootstrap5==0.6
 Django==4.1
 django-crispy-forms==1.14.0
 sqlparse==0.4.2
-<<<<<<< HEAD
 django-dotenv
 psycopg2-2.9.3
-=======
-psycopg2
->>>>>>> 8ac7de7a493bfbbb49c01acb92571c911a989732
+
