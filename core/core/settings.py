@@ -2,8 +2,12 @@
 import os
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
+import django_heroku
+import dj_database_url
+
 key=get_random_secret_key()
 print(key)
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -18,7 +22,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG'))=='1'
 
-ALLOWED_HOSTS = ['127.0.0.1','18.212.159.16','yinsight.com.ng']
+ALLOWED_HOSTS = ['*']
 
 if not DEBUG:
     ALLOWED_HOSTS=[os.environ.get('ALLOWED_HOST')]
@@ -133,10 +137,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_DIRS=[
     os.path.join(BASE_DIR,'static'),
 ]
 
+django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
