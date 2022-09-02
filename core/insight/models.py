@@ -22,7 +22,7 @@ class Shift_type(models.Model):
 
 class Equipment(models.Model):
     name = models.CharField(max_length=100,choices=choices.equipment_choices)
-   
+
 
 
     def __str__(self):

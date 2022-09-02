@@ -11,7 +11,7 @@ area_choices =[('Packaging', 'Packaging'),('Brewing', 'Brewing'),('Facilities', 
 shift_choices =[('Day Shift', 'Day'),('Night Shift', 'Night'),]
 
 equipment_choices=[('Filler','Filler'), ('Bottle washer','Bottle washer'),('Labeller','Labeller'),('EBI','EBI'),('Packer','Packer'),
-('Unpacker','Unpacker'),('Palletizer','Palletizer'),('Depalletizer','Depalletizer'),('Bottle Conveyor', "Bottle Conveyor"),('Crate Conveyor', "Crate Conveyor")]
+('Unpacker','Unpacker'),('Palletizer','Palletizer'),('Depalletizer','Depalletizer'),('Crate Conveyor', "Crate Conveyor"),('BConv-unpacker-Bwasher','BConv-unpacker-Bwasher'),('BConv-Bwasher-fill','BConv-Bwasher-filler'),('BConv-filler-labeller','BConv-filler-labeller'),('BConv-labeller-packer','BConv-labeller-packer')]
 
 bottle_conveyor_choices =[ ('unpacker-Bwasher','unpacker-Bwasher'),('Bwasher-fill','Bwasher-filler'),('filler-labeller','filler-labeller'),('labeller-packer','labeller-packer')]
 
