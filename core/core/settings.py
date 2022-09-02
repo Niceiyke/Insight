@@ -18,7 +18,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG'))=='1'
 
-ALLOWED_HOSTS = ['127.0.0.1','18.212.159.16']
+ALLOWED_HOSTS = ['127.0.0.1','18.212.159.16','yinsight.com.ng']
 
 if not DEBUG:
     ALLOWED_HOSTS=[os.environ.get('ALLOWED_HOST')]
