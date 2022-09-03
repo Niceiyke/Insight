@@ -23,7 +23,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['.insightdata.azurewebsites.net','127.0.0.1']
 
-CSRF_TRUSTED_ORIGINS = ['127.0.0.1', '.insightdata.azurewebsites.net']
+CSRF_TRUSTED_ORIGINS = ['https://insightdata.azurewebsites.net']
 # Application definition
 
 INSTALLED_APPS = [
