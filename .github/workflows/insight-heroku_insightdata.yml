@@ -60,4 +60,4 @@ jobs:
         with:
           app-name: 'insightdata'
           slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_7A34E38908A4444E9403647A4C6360FE }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F3F4B6189BE40C8966B62075BD724D1 }}
