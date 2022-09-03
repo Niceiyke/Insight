@@ -19,9 +19,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p1gpc8*297#&xo)l6_7$od^0nfy=8z5=)lxcp))&46dhvc#$@%z8tcldm1$)btw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['insightdata.azurewebsites.net']
+ALLOWED_HOSTS = ['insightdata.azurewebsites.net','127.0.0.1']
 
 
 # Application definition
@@ -114,10 +114,17 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
+if DEBUG:
 
-STATIC_URL = 'static/'
-STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
-STATIC_ROOT = BASE_DIR/ 'static'
+    STATIC_URL = 'static/'
+    STATICFILES_DIRS=[
+         os.path.join(BASE_DIR,'static'),
+    ]
+else:
+
+    STATIC_URL = 'static/'
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+    STATIC_ROOT = BASE_DIR / "staticfiles"
 
 
 
