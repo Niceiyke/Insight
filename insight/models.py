@@ -131,23 +131,6 @@ class InsightData(models.Model):
     deviation_data=models.ManyToManyField('Deviation',blank=True)
    
 
-    def save(self, *args, **kwargs):
-        
-
-        self.bottle_produced =self.new_counter_reading - self.last_counter_reading
-        print('bottleproduced',self.bottle_produced)
-        self.line_output = (int(self.bottle_produced)/int(self.line_speed.name))*100
-        print('lineoutput', self.line_output)
-        self.deviation_duration =60-((int(self.bottle_produced)/int(self.line_speed.name))*60)
-        if(self.deviation_duration<=0):
-            self.deviation_duration=0
-        print('deviation', self.deviation_duration)
-        expected_carton_unit=(int(self.line_speed.name)/int(self.product_type.bottles_per_carton))
-        print('expected carton',expected_carton_unit)
-        self.opi =((float(self.bottle_produced)/float(self.product_type.bottles_per_carton))/(float(expected_carton_unit)))*100
-        print( 'opi',self.opi)
-        super(InsightData,self).save(*args,**kwargs)
-
     
     def __str__(self):
         return f'{self.production_date}: {self.time_period}'

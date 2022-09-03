@@ -67,10 +67,13 @@ class InsightDataCreateView(LoginRequiredMixin,CreateView):
     template_name = 'insight/create.html'
     success_url = "/insight"
 
+  
     def get_initial(self):
-        qs=InsightData.objects.all().values_list('new_counter_reading').last()
-        qs=qs[len(qs)-1]
-        print(qs)
+        try:
+          qs=InsightData.objects.filter(line=self.kwargs['pk']).values_list('new_counter_reading').last()
+          qs=qs[len(qs)-1]
+        except:
+            qs=0
         data=super().get_initial()
         data['last_counter_reading']=qs
         return data
@@ -78,6 +81,11 @@ class InsightDataCreateView(LoginRequiredMixin,CreateView):
     def form_valid(self, form):
         data= super().form_valid(form)
         self.object =form.save(commit=False)
+
+        #Check if counter has been reset
+        if self.object.last_counter_reading > self.object.new_counter_reading :
+            self.object.last_counter_reading =0
+
         self.object.bottle_produced =self.object.new_counter_reading - self.object.last_counter_reading
         print('bottleproduced',self.object.bottle_produced)
 
@@ -96,7 +104,7 @@ class InsightDataCreateView(LoginRequiredMixin,CreateView):
         self.object.save()
 
         if (self.object.deviation_duration>0):
-            return redirect(f'deviation/create/{self.object.id}')
+            return redirect(f'/insight/deviation/create/{self.object.id}')
       
         return data
         
@@ -329,7 +337,7 @@ def DashboardView(request):
     for i in line6:
         line6_data.append(i.opi) 
         line6_label.append(i.time_period) 
-    
+    #refactore code with a try block
     line1_opi =0
     for i in line1_data:
         a =0

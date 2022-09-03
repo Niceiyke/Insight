@@ -1,20 +1,66 @@
 <header class="navbar navbar-light" style="background-color: var(--nav)">
   <div class="logo px-5">
-    <h1><a href="#">INSIGHT</a></h1>
+    <h1><a href="{% url 'dashboard' %}">YINSIGHT</a></h1>
   </div>
 
   {% if user.is_authenticated %}
-  <nav class="nav nav-masthead justify-content-end float-md-end px-5">
-    <a class="nav-link" href="{% url 'dashboard' %}">Dashbord</a>
-    <a class="nav-link" href="{% url 'list-data' %}">Record</a>
-        <a class="nav-link" href="{% url 'list-deviation' %}">Deviations</a>
-    <a class="nav-link" href="{% url 'create-data' %}">Add New Record</a>
-    
-
-    <a class="nav-link" href="#"> {{user.user_name}}</a>
-
-    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a
+              class="nav-link active"
+              aria-current="page"
+              href="{% url 'dashboard' %}"
+              >Dashbord</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'list-data' %}">Record</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'list-deviation' %}">Deviations</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="navbarDropdownMenuLink"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Add New Record
+            </a>
+            <ul class="dropdown-menu bg-white" aria-labelledby="navbarDropdownMenuLink">
+              <li>
+                <a class="dropdown-item" href="{% url 'create-data' 1 %}"
+                  >Line 1</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'create-data' 2 %}"
+                  >Line 2</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'create-data' 3 %}"
+                  >Line 3</a
+                >
+              </li>
+              <li>
+                <a class="dropdown-item" href="{% url 'create-data' 4 %}"
+                  >Line 4</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </div>
   </nav>
+
   {% else %}
   <nav class="nav nav-masthead justify-content-end float-md-end px-5">
     <a class="nav-link active" aria-current="page" href="#">Home</a>

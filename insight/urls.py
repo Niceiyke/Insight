@@ -5,7 +5,7 @@ from .views import DeviationDeploymentView,DeviationUpdateView, FilterForm, Insi
 urlpatterns = [
     path('',InsightDataListView.as_view(),name='list-data'),
     path('dashboard',DashboardView,name='dashboard'),
-    path('create',InsightDataCreateView.as_view(),name='create-data'),
+    path('create/<int:pk>',InsightDataCreateView.as_view(),name='create-data'),
     path('<str:pk>/edit',InsightDataUpdateView.as_view(),name='update-data'),
     path('<str:pk>/delete',InsightDataDeleteView.as_view(),name='delete-data'),
     path('deviation',DeviationListView,name='list-deviation'),
