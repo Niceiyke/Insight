@@ -1,12 +1,11 @@
 
 import os
-import pprint
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 
 
 key=get_random_secret_key()
-print(key)
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -20,7 +19,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p1gpc8*297#&xo)l6_7$od^0nfy=8z5=)lxcp))&46dhvc#$@%z8tcldm1$)btw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['.insightdata.azurewebsites.net','127.0.0.1']
 
@@ -71,18 +70,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
-env_var =os.environ
-
-pprint.pprint(dict(env_var), width = 1)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ.get('DB_NAME'),
-        'USER': os.environ.get('DB_USER'),
-        'PASSWORD': os.environ.get('DB_PASSWORD'),
-        'HOST': os.environ.get('DB_HOST'),
-        'PORT': os.environ.get('DB_PORT'),
+        'NAME': 'insight',
+        'USER': 'niceiyke',
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': "insightdata.postgres.database.azure.com",
+        'PORT': '5432',
         'OPTIONS':{"sslmode":"require"},
     }
 }
