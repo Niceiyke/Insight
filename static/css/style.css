@@ -113,7 +113,6 @@ nav li {
   padding: 10px;
 }
 
-
 .b-example-divider {
   height: 3rem;
   background-color: rgba(0, 0, 0, 0.1);
@@ -129,12 +128,9 @@ nav li {
   }
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-}
 
-.nav-link{
+
+.nav-link {
   color: #fff !important;
 }
 
@@ -172,16 +168,6 @@ nav li {
   background-color: var(--nav);
   color: var(--textcontent);
 }
-.k-table table,
-td,
-th {
-  border: 1px solid gray;
-  border-collapse: collapse;
-  text-align: center;
-
-  height: 4em;
-  padding: 5px;
-}
 .dropdown-menu {
   background-color: var(--nav);
 }
@@ -208,4 +194,18 @@ label {
 }
 .opi-red {
   color: red;
+}
+
+@media (max-width: 580px) {
+  .main-chart {
+    max-width: 90%;
+    height: 75%;
+    margin: 5px;
+  }
+
+  .main-card {
+  max-width: 90%;
+  height: 75%;
+  margin: 20px 20px 5px 5px;
+}
 }

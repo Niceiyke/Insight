@@ -1,16 +1,15 @@
 {% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
 
-
 <div class="kpi">
   <div class="row">
-    <div class="col-2 content-sidebar">
+    <div class="col-md-2 col-sm-4 content-sidebar">
       <h3>Filter</h3>
       <hr />
-    
+
       {% include 'insight/perfomance-filter.html' %}
     </div>
-    <div class="col-8 content-table">
-      <table>
+    <div class="col-md-10  col-sm-8 table-responsive">
+      <table class="table table-bordered border-primary">
         <thead>
           <tr>
             <th>Production Date</th>
@@ -42,14 +41,6 @@
           {% endfor %}
         </tbody>
       </table>
-    </div>
-
-    <div class="col-2 content-sidebar">
-      <h3>Summary</h3>
-      <hr />
-      <h5>Category</h5>
-      <h5>Equipment</h5>
-      <h5>Failure Mode</h5>
     </div>
   </div>
 </div>
