@@ -21,7 +21,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY','x9dwz*l1@3b%n20uv035ks^4x#m37al-0=ve!p
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['https://insightdata.azurewebsites.net']
+ALLOWED_HOSTS = ['insightdata.azurewebsites.net']
 
 
 # Application definition
