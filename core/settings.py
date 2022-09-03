@@ -1,5 +1,6 @@
 
 import os
+import pprint
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 
@@ -70,15 +71,21 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+env_var =os.environ
+
+pprint.pprint(dict(env_var), width = 1)
 
 DATABASES = {
-'default': {
-    'ENGINE': 'django.db.backends.sqlite3',
-    'NAME': BASE_DIR / 'db.sqlite3',
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('DB_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
+        'OPTIONS':{"sslmode":"require"},
+    }
 }
-}
-
-
 
 
 # Password validation
