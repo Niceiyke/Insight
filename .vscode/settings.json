@@ -1,0 +1,4 @@
+{
+  "appService.defaultWebAppToDeploy": "/subscriptions/03dab4d3-9e46-4e1b-b53d-a77fc1be56df/microsoft.web/sites/subscriptions/03dab4d3-9e46-4e1b-b53d-a77fc1be56df/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/yinsight",
+  "appService.deploySubpath": "."
+}
