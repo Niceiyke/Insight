@@ -50,9 +50,11 @@
             </ul>
           </li>
           {% endif %}
+           {% if perms.insight.add_insightdata %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'deployment' %}">Deployments</a>
           </li>
+           {% endif %}
           <li class="nav-item">
             <a class="nav-link" href="#">{{user.user_name}}</a>
           </li>
