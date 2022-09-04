@@ -149,6 +149,10 @@ class Deviation(models.Model):
     failure_mode_description =models.CharField(max_length=100)
     status =models.CharField(max_length=50,choices=choices.status)
 
+    class Meta:
+        permissions= [('can_view_dev_deployment','can view deployment')]
+    
+
     def __str__(self):
         return self.failure_mode_description 
 

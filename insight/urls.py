@@ -13,6 +13,6 @@ urlpatterns = [
     path('deviation/<int:pk>',DeviationUpdateView.as_view(),name='update-deviation'),
     path('deviation/<str:pk>/delete',DeviationDeleteView.as_view(),name='delete-deviation'),
     path('deviation/filter',FilterForm,name='filter'),
-    path('deviation/deployment',DeviationDeploymentView,name='dev-dashboard')
+    path('deviation/deployment',DeviationDeploymentView,name='deployment')
 
 ]
