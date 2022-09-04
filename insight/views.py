@@ -127,7 +127,7 @@ class InsightDataDeleteView(LoginRequiredMixin,DeleteView):
 def DeviationListView(request):
     qs= Deviation.objects.all()
     categories= Category.objects.all()
-    equipments =Equipment.objects.all()
+    deviations =Equipment.objects.all()
     failure_modes =FailureMode.objects.all()
     lines =Line.objects.all()
     function_failures =FunctionFailure.objects.all()
@@ -179,7 +179,7 @@ def DeviationListView(request):
         'deviations':qs,
         'lines':lines,
         'categories':categories,
-        'equipments':equipments,
+        'deviations':deviations,
         'functions':function_failures,
         'failures':failure_modes,
         'duration':total_duration['duration_sum'],
@@ -195,8 +195,7 @@ def DeviationListView(request):
 
 @login_required(login_url='/accounts/login')
 def DeviationDeploymentView(request):
-    equipments =Equipment.objects.all()
-    print('all',len(equipments))
+    deviations =Deviation.objects.values('equipment__name')
     function_failures =FunctionFailure.objects.all()
     failure_modes =FailureMode.objects.all()
     lines =Line.objects.all()
@@ -208,19 +207,18 @@ def DeviationDeploymentView(request):
     end_date=request.GET.get('end-date')
 
     if line !='' and line is not None:
-        equipments= equipments.filter(deviation__insight__line__id=line)
- 
-        
+        deviations= deviations.filter(insight__line__id=line)
+
     
     if start_date !='' and start_date is not None:
-        equipments =equipments.filter(deviation__insight__production_date__gte= start_date)
-
+        deviations =deviations.filter(insight__production_date__gte= start_date)
+ 
     if end_date !='' and start_date is not None:
-        equipments =equipments.filter(deviation__insight__production_date__lte= end_date)
+        deviations =deviations.filter(insight__production_date__lte= end_date)
         
 
-    bddeployments=equipments.filter(deviation__category=1).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
-    msdeployments=equipments.filter(deviation__category=2).annotate(duration=Sum('deviation__duration',distinct=True),frequency=Sum('deviation__frequency',distinct=True))
+    bddeployments=deviations.filter(category=1).annotate(duration=Sum('duration',distinct=True),frequency=Sum('frequency',distinct=True))
+    msdeployments=deviations.filter(category=2).annotate(duration=Sum('duration',distinct=True),frequency=Sum('frequency',distinct=True))
 
 
     context={
