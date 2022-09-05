@@ -273,7 +273,7 @@ def DeviationCreateView(request,pk):
         context={'form':form,'duration':duration}
         return render(request,'insight/create-deviation.html',context)
     else:
-        return redirect('/insight')
+        return redirect('/insight/dashboard')
 
 
 class DeviationUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
