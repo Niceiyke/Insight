@@ -64,7 +64,7 @@ class InsightDataCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateVie
     model: InsightData
     form_class =DataForm
     template_name = 'insight/create.html'
-    success_url = "/insight"
+    success_url = "/insight/dashboard"
 
   
     def get_initial(self):
@@ -365,12 +365,12 @@ def DashboardView(request):
         'line6_label': line6_label,
     }
     return render(request,'insight/dashboard.html',context)
-
+@permission_required('insight.add_failuremode')
 def FailureModeView(request):
     form=FailureModeForm()
     context={'form':form}
     return render(request,'insight/failure-mode.html',context)
-
+@permission_required('insight.add_functionfailure')
 def FunctionFailureView(request):
     form=FunctionFailureForm()
     context={'form':form}
