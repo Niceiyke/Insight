@@ -16,7 +16,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'list-data' %}">Record</a>
+            <a class="nav-link" href="{% url 'list-data' 'Line 2' %}">Record</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'list-deviation' %}">Deviations</a>
@@ -50,11 +50,32 @@
             </ul>
           </li>
           {% endif %}
-           {% if perms.insight.add_insightdata %}
+          {% if perms.insight.add_insightdata %}
           <li class="nav-item">
             <a class="nav-link" href="{% url 'deployment' %}">Deployments</a>
           </li>
            {% endif %}
+          {% if perms.insight.add_insightdata %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Manage Equipments
+            </a>
+            <ul class="dropdown-menu bg-white" aria-labelledby="navbarDropdownMenuLink">
+
+                <li>
+                  <a class="dropdown-item" href="{% url 'function-failure'  %}"
+                    >Function Failure</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'failure-mode'  %}"
+                    >FAilure Mode</a
+                  >
+                </li>
+              </ul>
+            </li>
+            {% endif %}
+
           <li class="nav-item">
             <a class="nav-link" href="#">{{user.user_name}}</a>
           </li>

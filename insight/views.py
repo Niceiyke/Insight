@@ -4,7 +4,7 @@ from django.views.generic import View, ListView,CreateView,UpdateView,DeleteView
 from django.contrib.auth.decorators import login_required,permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from .models import Data_operator, FailureMode, FunctionFailure,InsightData,Deviation,Equipment,Category, Line, Product_type, Team_leader, Time_period
-from .forms import DataForm,DeviationForm,FiltterForm
+from .forms import DataForm,DeviationForm, FailureModeForm,FiltterForm, FunctionFailureForm
 
 
 class InsightDataListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
@@ -31,7 +31,7 @@ class InsightDataListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
 
         return datas
     def get_queryset(self):
-        qs=super().get_queryset()
+        qs=super().get_queryset().filter(line=self.kwargs['pk'])
 
         start_date=self.request.GET.get('start-date')
         end_date=self.request.GET.get('end-date')
@@ -348,7 +348,7 @@ def DashboardView(request):
         a+=i
     line1_opi=round(a/12,1)
 
-
+    print(line1_data,line1_label)
     context={
         'line_opi1': line1_opi,
         'line1_data':line1_data,
@@ -365,3 +365,13 @@ def DashboardView(request):
         'line6_label': line6_label,
     }
     return render(request,'insight/dashboard.html',context)
+
+def FailureModeView(request):
+    form=FailureModeForm()
+    context={'form':form}
+    return render(request,'insight/failure-mode.html',context)
+
+def FunctionFailureView(request):
+    form=FunctionFailureForm()
+    context={'form':form}
+    return render(request,'insight/function-failure.html',context)

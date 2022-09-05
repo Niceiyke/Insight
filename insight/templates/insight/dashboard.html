@@ -4,34 +4,49 @@
   <div class="row">
     <div class="col-12 flex mt-20">
       <div class="row">
+        
         <div
           class="col-md-6 col-sm-12 card main-card"
           style="background-color: rgb(76, 172, 76)"
-        >
+        ><a href="{% url 'list-data' 1 %}" >
           <h4>Line 1 Opi</h4>
           <h6>{{line_opi1}}%</h6>
+        </a>
         </div>
-        <div
-          class="col-md-6 col-sm-12 card main-card"
+      
+    
+        <div    
+          class=" col-md-6 col-sm-12 card main-card"
           style="background-color: rgb(196, 136, 59)"
         >
+        <a href="{% url 'list-data' 2 %}" >
           <h4>Line 2 Opi</h4>
           <h6>70%</h6>
+        </a>
         </div>
+      </div>
+        <div class="row">
+    
         <div
-          class="col-md-6 col-sm-12 card main-card"
+          class=" col-md-6 col-sm-12 card main-card"
           style="background-color: rgb(83, 150, 228)"
         >
+        <a href="{% url 'list-data' 3 %}" >
           <h4>Line 3 Opi</h4>
           <h6>10%</h6>
+        </a>
         </div>
+
         <div
-          class="col-md-6 col-sm-12 card main-card"
+          class=" col-md-6 col-sm-12 card main-card"
           style="background-color: rgb(83, 150, 228)"
         >
+        <a href="{% url 'list-data' 4 %}" >
           <h4>Line 4 Opi</h4>
           <h6>70%</h6>
+        </a>
         </div>
+    
       </div>
 
       <div class="row street1">
@@ -42,11 +57,11 @@
             const myChart1 = new Chart(ctx1, {
               type: "line",
               data: {
-                labels: [{%for label in line1_label%}  "{{label}}",{% endfor%} ],
+                labels: [{% for label in line1_label%}  "{{label}}",{% endfor %} ],
                 datasets: [
                   {
                     label: "Opi",
-                    data: [{%for data in line1_data%}  {{data}}, {% endfor%} ],
+                    data: [{% for data in line1_data %}  {{data}}, {% endfor %} ],
                     backgroundColor: [
                       "rgba(255, 99, 132, 0.2)",
                       "rgba(54, 162, 235, 0.2)",
@@ -88,11 +103,11 @@
             const myChart2 = new Chart(ctx2, {
               type: "line",
               data: {
-                labels: [{%for label in line2_label%}  "{{label}}",{% endfor%} ],
+                labels: [{% for label in line2_label%}  "{{label}}",{% endfor %} ],
                 datasets: [
                   {
                     label: "Opi",
-                    data: [{%for data in line2_data%}  {{data}}, {% endfor%} ],
+                    data: [{% for data in line2_data %}  {{data}}, {% endfor %} ],
                     backgroundColor: [
                       "rgba(255, 99, 132, 0.2)",
                       "rgba(54, 162, 235, 0.2)",

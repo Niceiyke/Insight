@@ -1,9 +1,10 @@
 from django.urls import path
 
-from .views import DeviationDeploymentView,DeviationUpdateView, FilterForm, InsightDataCreateView,InsightDataDeleteView,InsightDataListView,InsightDataUpdateView,DeviationListView,DeviationCreateView,DeviationDeleteView,DashboardView
+
+from .views import DeviationDeploymentView,DeviationUpdateView, FailureModeView, FilterForm, FunctionFailureView, InsightDataCreateView,InsightDataDeleteView,InsightDataListView,InsightDataUpdateView,DeviationListView,DeviationCreateView,DeviationDeleteView,DashboardView
 
 urlpatterns = [
-    path('',InsightDataListView.as_view(),name='list-data'),
+    path('records/<str:pk>',InsightDataListView.as_view(),name='list-data'),
     path('dashboard',DashboardView,name='dashboard'),
     path('create/<int:pk>',InsightDataCreateView.as_view(),name='create-data'),
     path('<str:pk>/edit',InsightDataUpdateView.as_view(),name='update-data'),
@@ -13,6 +14,8 @@ urlpatterns = [
     path('deviation/<int:pk>',DeviationUpdateView.as_view(),name='update-deviation'),
     path('deviation/<str:pk>/delete',DeviationDeleteView.as_view(),name='delete-deviation'),
     path('deviation/filter',FilterForm,name='filter'),
-    path('deviation/deployment',DeviationDeploymentView,name='deployment')
+    path('deviation/deployment',DeviationDeploymentView,name='deployment'),
+    path('failure-mode',FailureModeView,name='failure-mode'),
+    path('function-failure',FunctionFailureView,name='function-failure'),
 
 ]

@@ -1,7 +1,6 @@
-from datetime import date
 from django.forms import ModelForm
 from django import forms
-from .models import FailureMode, InsightData,Deviation,Equipment
+from .models import FailureMode, FunctionFailure, InsightData,Deviation,Equipment
 
 
 
@@ -29,6 +28,15 @@ class EquipmentForm(ModelForm):
         model=Equipment
         fields ='__all__'
 
+class FailureModeForm(ModelForm):
+    class Meta:
+        model =FailureMode
+        fields ='__all__'
+
+class FunctionFailureForm(ModelForm):
+    class Meta:
+        model =FunctionFailure
+        fields ='__all__'
 
 class FiltterForm(forms.Form):
     category =forms.ChoiceField(widget=forms.Select,required=False)
