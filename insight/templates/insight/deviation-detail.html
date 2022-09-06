@@ -2,11 +2,6 @@
 
 <div class="deviation">
   <div class="row">
-    <div class="col-md-2 col-sm-12 content-sidebar">
-      <h3>Filter</h3>
-      <hr />
-      {% include 'insight/deviation-filter.html' %}
-    </div>
     <div class="col-md-8 col-sm-12 table-responsive">
       <table class="table table-bordered border-primary">
         <thead>
@@ -23,10 +18,11 @@
             <th>Frquency</th>
             <th>Shift</th>
             <th>Status</th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {% for deviation in deviations %}
           <tr>
             <td>{{deviation.insight.production_date.date}}</td>
             <td>{{deviation.insight.production_date.time}}</td>
@@ -40,37 +36,23 @@
             <td>{{deviation.frequency}}</td>
             <td>{{deviation.insight.shift_type}}</td>
             <td>{{deviation.status}}</td>
-                        {% if perms.insight.change_insightdata %}
-            <td><a href="{% url 'deviation-detail' deviation.id %}" style="color: #000;">view</a></td>
-            {% endif %}
+            <td>
+              <a
+                href="{% url 'update-deviation' deviation.id %}"
+                style="color: #000"
+                >update</a
+              >
+            </td>
+            <td>
+              <a
+                href="{% url 'delete-deviation' deviation.id %}"
+                style="color: #000"
+                >delete</a
+              >
+            </td>
           </tr>
-          {% endfor %}
         </tbody>
       </table>
-    </div>
-    <div class="col-md-2 col-sm-12 content-sidebar">
-      <h3 style="color: --bs-gray-dark">Summary</h3>
-      <hr />
-      <div style="display: flex; flex-direction: column">
-        <label>Unplanned Downtime:</label>
-        <strong style="color: #222322">{{duration}} mins</strong>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <label>Breakdown</label>
-        <strong style="color: #222322">{{bdduration}} mins</strong>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <label>Minor Stops</label>
-        <strong style="color: #222322">{{msduration}} mins</strong>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <label>MTBF</label>
-        <strong style="color: #222322">{{mtbf}} mins</strong>
-      </div>
-      <div style="display: flex; flex-direction: column">
-        <label>MTBA</label>
-        <strong style="color: #222322">{{msduration}} mins</strong>
-      </div>
     </div>
   </div>
 </div>

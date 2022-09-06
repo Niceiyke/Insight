@@ -1,6 +1,6 @@
 from django.shortcuts import redirect,render
 from django.db.models import Sum,Min,Avg
-from django.views.generic import View, ListView,CreateView,UpdateView,DeleteView
+from django.views.generic import View, ListView,CreateView,UpdateView,DeleteView,DetailView
 from django.contrib.auth.decorators import login_required,permission_required
 from django.contrib.auth.mixins import LoginRequiredMixin,PermissionRequiredMixin
 from .models import Data_operator, FailureMode, FunctionFailure,InsightData,Deviation,Equipment,Category, Line, Product_type, Team_leader, Time_period
@@ -58,6 +58,11 @@ class InsightDataListView(LoginRequiredMixin,PermissionRequiredMixin,ListView):
 
         return qs
       
+class InsightDataDetailsView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
+    permission_required = ('insight.change_insightdata')
+    model = InsightData
+    template_name= 'insight/data-detail.html'
+    context_object_name= 'data'
 
 class InsightDataCreateView(LoginRequiredMixin,PermissionRequiredMixin,CreateView):
     permission_required = ('insight.add_insightdata')
@@ -113,14 +118,43 @@ class InsightDataUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateVie
     model = InsightData
     form_class = DataForm
     template_name = 'insight/create.html'
-    success_url = "/insight"
+    success_url = "/insight/dashboard"
+
+    def form_valid(self, form):
+        data= super().form_valid(form)
+        self.object =form.save(commit=False)
+
+        #Check if counter has been reset
+        if self.object.last_counter_reading > self.object.new_counter_reading :
+            self.object.last_counter_reading =0
+
+        self.object.bottle_produced =self.object.new_counter_reading - self.object.last_counter_reading
+        print('bottleproduced',self.object.bottle_produced)
+
+        self.object.line_output = (int(self.object.bottle_produced)/int(self.object.line_speed.name))*100
+        print('lineoutput', self.object.line_output)
+
+        self.object.deviation_duration =60-((int(self.object.bottle_produced)/int(self.object.line_speed.name))*60)
+        if(self.object.deviation_duration<=0):
+            self.object.deviation_duration=0
+        print('deviation', self.object.deviation_duration)
+
+        expected_carton_unit=(int(self.object.line_speed.name)/int(self.object.product_type.bottles_per_carton))
+        print('expected carton',expected_carton_unit)
+        self.object.opi =((float(self.object.bottle_produced)/float(self.object.product_type.bottles_per_carton))/(float(expected_carton_unit)))*100
+        print( 'opi',self.object.opi)
+        self.object.save()
+
+        return data
+
+ 
 
     
 class InsightDataDeleteView(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
     permission_required = ('insight.delete_insightdata')
     model =InsightData
     template_name ='insight/delete.html'
-    success_url = '/insight'
+    success_url = '/insight/dashboard'
 
 @login_required
 @permission_required('insight.view_deviation')
@@ -174,8 +208,7 @@ def DeviationListView(request):
      mtbf=round(bd_duration['bdduration_sum']/num_breakdown,0)
     except:
         mtbf=0
-    print(qs)
- 
+
     context ={
         'deviations':qs,
         'lines':lines,
@@ -187,8 +220,6 @@ def DeviationListView(request):
         'bdduration':bd_duration['bdduration_sum'],
         'msduration':ms_duration['msduration_sum'],
         'mtbf':mtbf,
-
-
        
     }
 
@@ -261,7 +292,6 @@ def DeviationCreateView(request,pk):
         deviation.save(force_insert=True)
     total_duration=InsightData.objects.get(id=pk)   
     total_duration=total_duration.deviation_duration 
-    print('gfd',total_duration)
     b=Deviation.objects.all()
     d=0
     for i in b:
@@ -275,7 +305,12 @@ def DeviationCreateView(request,pk):
     else:
         return redirect('/insight/dashboard')
 
-
+class DeviationDetailsView(LoginRequiredMixin,PermissionRequiredMixin,DetailView):
+    permission_required = ('insight.change_deviation')
+    model =Deviation
+    template_name= 'insight/deviation-detail.html'
+    context_object_name= 'deviation'
+    
 class DeviationUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView):
     permission_required = ('insight.change_deviation')
     model = Deviation
@@ -286,9 +321,10 @@ class DeviationUpdateView(LoginRequiredMixin,PermissionRequiredMixin,UpdateView)
 
 class DeviationDeleteView(LoginRequiredMixin,PermissionRequiredMixin,DeleteView):
     permission_required = ('insight.delete_deviation')
-    model =InsightData
+    model =Deviation
     template_name ='insight/delete-deviation.html'
     success_url = '/insight/deviation'
+
 @login_required
 def FilterForm(request):
     filterform=FiltterForm()

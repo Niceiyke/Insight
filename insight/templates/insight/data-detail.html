@@ -2,13 +2,7 @@
 
 <div class="kpi">
   <div class="row">
-    <div class="col-md-2 col-sm-4 content-sidebar">
-      <h3>Filter</h3>
-      <hr />
-
-      {% include 'insight/perfomance-filter.html' %}
-    </div>
-    <div class="col-md-10  col-sm-8 table-responsive">
+    <div class="col-md-10 col-sm-8 table-responsive">
       <table class="table table-bordered border-primary">
         <thead>
           <tr>
@@ -22,11 +16,11 @@
             <th>Product Type</th>
             <th>Bottle Produced</th>
             <th>Line Efficiency</th>
-            <th></th>
+            <th>Update</th>
+            <th>Delete</th>
           </tr>
         </thead>
         <tbody>
-          {% for data in datas %}
           <tr>
             <td>{{data.production_date}}</td>
             <td>{{data.time_period}}</td>
@@ -38,11 +32,17 @@
             <td>{{data.product_type}}</td>
             <td>{{data.bottle_produced}}</td>
             <td class="opi">{{data.line_output}}</td>
-            {% if perms.insight.change_insightdata %}
-            <td><a href="{% url 'data-detail' data.id %}" style="color: #000;">view</a></td>
-            {% endif %}
+            <td>
+              <a href="{% url 'update-data' data.id %}" style="color: #000"
+                >update</a
+              >
+            </td>
+            <td>
+              <a href="{% url 'delete-data' data.id %}" style="color: #000"
+                >delete</a
+              >
+            </td>
           </tr>
-          {% endfor %}
         </tbody>
       </table>
     </div>
