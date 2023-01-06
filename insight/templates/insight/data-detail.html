@@ -1,0 +1,52 @@
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
+
+<div class="kpi">
+  <div class="row">
+    <div class="col-md-10 col-sm-8 table-responsive">
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>Production Date</th>
+            <th>Period</th>
+            <th>Area</th>
+            <th>Line</th>
+            <th>Team Leader</th>
+            <th>Operator</th>
+            <th>Team</th>
+            <th>Product Type</th>
+            <th>Bottle Produced</th>
+            <th>Line Efficiency</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{data.production_date}}</td>
+            <td>{{data.time_period}}</td>
+            <td>{{data.area}}</td>
+            <td>{{data.line}}</td>
+            <td>{{data.team_leader}}</td>
+            <td>{{data.data_operator}}</td>
+            <td>{{data.production_team}}</td>
+            <td>{{data.product_type}}</td>
+            <td>{{data.bottle_produced}}</td>
+            <td class="opi">{{data.line_output}}</td>
+            <td>
+              <a href="{% url 'update-data' data.id %}" style="color: #000"
+                >update</a
+              >
+            </td>
+            <td>
+              <a href="{% url 'delete-data' data.id %}" style="color: #000"
+                >delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}

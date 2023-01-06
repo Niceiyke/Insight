@@ -1,0 +1,56 @@
+{% extends 'base.html' %}{% block content %} {% include 'navbar.html' %}
+
+<div class="deviation">
+  <div class="row">
+    <div class="col-md-2 col-sm-12 content-sidebar">
+      <h3>Filter</h3>
+      <hr />
+      {% include 'insight/dev-deployment-filter.html' %}
+    </div>
+    <div class="col-md-4  col-sm-12 table-responsive">
+      <h3>BreakDown Deployment</h3>
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>Equipment</th>
+            <th>BreakDown Duration</th>
+            <th>BreakDown Frequency</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for bd in bddeployments %}
+          <tr>
+            <td>{{bd.equipment__name}}</td>
+            <td>{{bd.duration}}</td>
+            <td>{{bd.frequency}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <h3>Minor Stop Deployment</h3>
+      <div>
+        <table class="table table-bordered border-primary">
+          <thead>
+            <tr>
+              <th>Equipment</th>
+              <th>Minor Stops Duration</th>
+              <th>Minor Stops Frequency</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for ms in msdeployments %}
+            <tr>
+              <td>{{ms.equipment__name}}</td>
+              <td>{{ms.duration}}</td>
+              <td>{{ms.frequency}}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

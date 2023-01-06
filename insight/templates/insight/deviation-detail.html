@@ -1,0 +1,59 @@
+{% extends 'base.html' %}{% block content %} {% include 'navbar.html' %}
+
+<div class="deviation">
+  <div class="row">
+    <div class="col-md-8 col-sm-12 table-responsive">
+      <table class="table table-bordered border-primary">
+        <thead>
+          <tr>
+            <th>production date</th>
+            <th>Time</th>
+            <th>Line</th>
+            <th>Category</th>
+            <th>Equipment</th>
+            <th>Function Failure</th>
+            <th>Failure Mode</th>
+            <th>Failure Mode Desc</th>
+            <th>Duration</th>
+            <th>Frquency</th>
+            <th>Shift</th>
+            <th>Status</th>
+            <th>Update</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{deviation.insight.production_date.date}}</td>
+            <td>{{deviation.insight.production_date.time}}</td>
+            <td>{{deviation.insight.line}}</td>
+            <td>{{deviation.category}}</td>
+            <td>{{deviation.equipment}}</td>
+            <td>{{deviation.function_failure}}</td>
+            <td>{{deviation.failure_mode}}</td>
+            <td>{{deviation.failure_mode_description}}</td>
+            <td>{{deviation.duration}}</td>
+            <td>{{deviation.frequency}}</td>
+            <td>{{deviation.insight.shift_type}}</td>
+            <td>{{deviation.status}}</td>
+            <td>
+              <a
+                href="{% url 'update-deviation' deviation.id %}"
+                style="color: #000"
+                >update</a
+              >
+            </td>
+            <td>
+              <a
+                href="{% url 'delete-deviation' deviation.id %}"
+                style="color: #000"
+                >delete</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock content %}

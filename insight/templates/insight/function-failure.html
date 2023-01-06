@@ -1,0 +1,16 @@
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %} 
+{% load crispy_forms_tags %}
+<div class="container mt-3 border " style="font-size:14px">
+  <div class="data-header"><h3>
+    Add Failure Mode
+  </h3></div>
+    <form action="" method="post" autocomplete="off">
+      {% csrf_token %} 
+      <div class="row mx-5">
+        <div class="col-xl-4 col-md-10">{{form.equipment|as_crispy_field}}</div>
+          <div class="col-xl-4 col-md-10">{{form.function_failure|as_crispy_field}}</div>
+          <button type="submit" class="btn btn-primary mt-3 mb-3 mx-5" style="width: 90%;">Submit</button>
+  </div>
+  </form>
+</div>
+{% endblock content %}
